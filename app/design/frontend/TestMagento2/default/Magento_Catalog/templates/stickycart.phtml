@@ -1,0 +1,63 @@
+<?php
+/*
+ * @category: Magepow
+ * @copyright: Copyright (c) 2014 Magepow (http://www.magepow.com/)
+ * @licence: http://www.magepow.com/license-agreement
+ * @author: MichaelHa
+ * @create date: 2019-07-15 17:19:50
+ * @LastEditors: MichaelHa
+ * @LastEditTime: 2019-07-23 21:18:27
+ */
+  $currentProduct = $this->getProduct();
+  $id = $currentProduct->getId();
+  $imageUrl = $this->helper('Magento\Catalog\Helper\Image')
+                    ->init($currentProduct, 'product_base_image')
+                    ->constrainOnly(TRUE)
+                    ->keepAspectRatio(TRUE)
+                    ->keepTransparency(TRUE)
+                    ->keepFrame(FALSE)
+                    ->resize(80, 80)->getUrl();
+
+
+?>
+  <div class="prodcut-sticky">
+        <div class="prodcut-sticky-container">
+            <div class="prodcut-sticky-image">
+                <img class="stickyImg" src="<?php echo $imageUrl; ?>" alt="Product image" />
+            </div>
+            <div class="prodcut-sticky-name">
+                <?php echo $block->escapeHtml(__($currentProduct->getName())) ?>
+            </div>
+            <div class="prodcut-sticky-price">
+                <?php echo $block->getProductPrice($currentProduct)?>
+            </div>
+            <div class="prodcut-sticky-actions">
+                <?php if ($currentProduct->getTypeId() == 'bundle'): ?>
+                    <button class="btnCustom">Customize</button>
+                  <?php else: ?>
+                    <button id="btnSticky">Add To Cart</button>
+                <?php endif; ?>
+            </div>
+      </div>
+  </div>
+<?php
+$formData = [
+    'stickyCart'    	        =>  '.prodcut-sticky',
+    'btnCustom'                 =>  '#btnCustom',
+    'quantity'                  =>  '.quantity',
+    'qtyGrouped'                =>  '#qtyGrouped',
+    'btnSticky'                 =>  '#btnSticky'
+];
+$stickyData = $this->helper('Magento\Framework\Json\Helper\Data')->jsonEncode($formData);
+?>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "egdSticky": {
+                "jsonData":<?php /* @noEscape */ echo $stickyData; ?>,
+                "ScrollHeight": 300
+            }
+        }
+    }
+</script>
+
