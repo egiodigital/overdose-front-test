@@ -1,0 +1,16 @@
+{
+  "blank": {
+    "src": "vendor/snowdog/theme-blank-sass",
+    "dest": "pub/static/frontend/Snowdog/blank",
+    "locale": ["en_US"],
+    "ignore": [".test"]
+  },
+  "TestMagento2": {
+    "src": "app/design/frontend/TestMagento2/default",
+    "dest": "app/design/frontend/TestMagento2/default",
+    "locale": ["web"],
+    "parent": "blank",
+    "stylesDir": "styles"
+  }
+}
+
